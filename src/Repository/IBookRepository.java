@@ -10,4 +10,5 @@ public interface IBookRepository {
   Boolean update(Book book);
   Boolean delete(Book book);
   Book getById(int id);
+  List<Book> getDetailBook();
 }

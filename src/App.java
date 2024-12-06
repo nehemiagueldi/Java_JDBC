@@ -10,6 +10,7 @@ public class App {
         // bookController.post();
         // bookController.update();
         // bookController.delete();
-        bookController.getById();
+        // bookController.getById();
+        bookController.getDetailBook();
     }
 }

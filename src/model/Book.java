@@ -8,6 +8,8 @@ public class Book {
   private int count;
   private int publisher_id;
   private int author_id;
+  private Publisher publisher;
+  private Author author;
 
   public int getId() {
     return id;
@@ -50,5 +52,17 @@ public class Book {
   }
   public void setAuthor_id(int author_id) {
     this.author_id = author_id;
+  }
+  public Publisher getPublisher() {
+    return publisher;
+  }
+  public void setPublisher(Publisher publisher) {
+    this.publisher = publisher;
+  }
+  public Author getAuthor() {
+    return author;
+  }
+  public void setAuthor(Author author) {
+    this.author = author;
   }
 }

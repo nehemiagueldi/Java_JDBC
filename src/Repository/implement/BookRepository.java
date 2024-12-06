@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Repository.IBookRepository;
+import model.Author;
 import model.Book;
+import model.Publisher;
 
 public class BookRepository implements IBookRepository {
   private Connection connection;
@@ -103,5 +105,37 @@ public class BookRepository implements IBookRepository {
       e.printStackTrace();
     }
     return book;
+  }
+
+  @Override
+  public List<Book> getDetailBook() {
+    List<Book> books = new ArrayList<>();
+    String query = "SELECT tb_book.id, tb_book.title , tb_book.count, tb_publisher.name, tb_author.name "
+                + "FROM tb_book "
+                + "JOIN tb_publisher ON tb_publisher.id = tb_book.publisher_id "
+                + "JOIN tb_author ON tb_author.id = tb_book.author_id "
+                + "ORDER BY tb_book.id ASC ";
+    try {
+      ResultSet resultSet = connection.prepareStatement(query).executeQuery();
+      while (resultSet.next()) {
+        Book book = new Book();
+        book.setId(resultSet.getInt(1));
+        book.setTitle(resultSet.getString(2));
+        book.setCount(resultSet.getInt(3));
+
+        Publisher publisher = new Publisher();
+        publisher.setName(resultSet.getString(4));
+        book.setPublisher(publisher);
+
+        Author author = new Author();
+        author.setName(resultSet.getString(5));
+        book.setAuthor(author);
+
+        books.add(book);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return books;
   }
 }

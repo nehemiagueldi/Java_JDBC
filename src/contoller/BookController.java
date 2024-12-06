@@ -71,4 +71,15 @@ public class BookController {
     System.out.println("Book Price: " + book.getPrice());
     System.out.println("Book Stock: " + book.getCount());
   }
+
+  // getDetailBook (FK author dan publisher)
+  public void getDetailBook(){
+    for (Book book : bookRepository.getDetailBook()){
+      System.out.println("\nBook ID: " + book.getId());
+      System.out.println("Book Name: " + book.getTitle());
+      System.out.println("Book Stock: " + book.getCount());
+      System.out.println("Publisher Name: " + book.getPublisher().getName());
+      System.out.println("Author Name: " + book.getAuthor().getName());
+    }
+  }
 }
