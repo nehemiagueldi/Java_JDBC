@@ -23,8 +23,8 @@ public class BookController {
     book.setYear(2006);
     book.setPrice(82000);
     book.setCount(60);
-    book.setPublisher_id(3);
-    book.setAuthor_id(2);
+    // book.setPublisher_id(3);
+    // book.setAuthor_id(2);
 
     Boolean result = bookRepository.post(book);
     if (result) {

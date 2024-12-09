@@ -10,6 +10,7 @@ import Repository.IBookRepository;
 import model.Author;
 import model.Book;
 import model.Publisher;
+import model.dto.AutPubDTO;
 
 public class BookRepository implements IBookRepository {
   private Connection connection;
@@ -46,8 +47,8 @@ public class BookRepository implements IBookRepository {
       preparedStatement.setInt(3, book.getYear());
       preparedStatement.setInt(4, book.getPrice());
       preparedStatement.setInt(5, book.getCount());
-      preparedStatement.setInt(6, book.getPublisher_id());
-      preparedStatement.setInt(7, book.getAuthor_id());
+      // preparedStatement.setInt(6, book.getPublisher_id());
+      // preparedStatement.setInt(7, book.getAuthor_id());
       int result = preparedStatement.executeUpdate();
       return result > 0;
     } catch (Exception e) {
@@ -118,20 +119,36 @@ public class BookRepository implements IBookRepository {
     try {
       ResultSet resultSet = connection.prepareStatement(query).executeQuery();
       while (resultSet.next()) {
-        Book book = new Book();
-        book.setId(resultSet.getInt(1));
-        book.setTitle(resultSet.getString(2));
-        book.setCount(resultSet.getInt(3));
+        // CARA 1
+        // Book book = new Book();
+        // book.setId(resultSet.getInt(1));
+        // book.setTitle(resultSet.getString(2));
+        // book.setCount(resultSet.getInt(3));
+        // book.setPublisher(new Publisher(resultSet.getString(4)));
+        // book.setAuthor(new Author(resultSet.getString(5)));
 
-        Publisher publisher = new Publisher();
-        publisher.setName(resultSet.getString(4));
-        book.setPublisher(publisher);
+        // CARA 2 (DTO)
+        // Setter dan Getter ke dto
+        AutPubDTO autpubDTO = new AutPubDTO();
+        autpubDTO.setBookId(resultSet.getInt(1));
+        autpubDTO.setBookTitle(resultSet.getString(2));
+        autpubDTO.setBookCount(resultSet.getInt(3));
+        autpubDTO.setNamePublisher(resultSet.getString(4));
+        autpubDTO.setNameAuthor(resultSet.getString(5));
 
-        Author author = new Author();
-        author.setName(resultSet.getString(5));
-        book.setAuthor(author);
+        // Passing data dto ke model book menggunakan constructor
+        Book book = new Book(autpubDTO);
 
+        // Menambahkan objek model kedalam list
         books.add(book);
+
+        // Publisher publisher = new Publisher();
+        // publisher.setName(resultSet.getString(4));
+        // book.setPublisher(publisher);
+
+        // Author author = new Author();
+        // author.setName(resultSet.getString(5));
+        // book.setAuthor(author);
       }
     } catch (Exception e) {
       e.printStackTrace();

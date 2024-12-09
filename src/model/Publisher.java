@@ -6,6 +6,14 @@ public class Publisher {
   private String email;
   private int phone;
   private String address;
+
+  public Publisher() {
+    super();
+  }
+
+  public Publisher(String name) {
+    this.name = name;
+  }
   
   public int getId() {
     return id;
